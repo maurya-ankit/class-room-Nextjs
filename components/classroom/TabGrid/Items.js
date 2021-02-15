@@ -15,6 +15,9 @@ const useStyle = makeStyles({
     icon: {
         position: "absolute",
         marginLeft: -47,
+    },
+    btn: {
+        borderRadius: 10,
     }
 })
 
@@ -38,7 +41,7 @@ const Items = () => {
 
                 </Grid>
                 <Grid item>
-                    <Button color="secondary">View More</Button>
+                    <Button color="primary" variant="outlined" className={classes.btn} aria-label="View More">View More</Button>
                 </Grid>
             </Grid>
             <Grid
@@ -52,7 +55,7 @@ const Items = () => {
             >
                 {images.map((image) =>
                     <Grid item className={classes.grid} key={image}>
-                        <Image src="/images/Profile-Pic.jpg" height={200} width={200} className={classes.img} />
+                        <Image src="/images/Profile-Pic.jpg" height={200} width={200} className={classes.img} alt="classroom grids" />
                         <IconButton className={classes.icon} onClick={() => setX(Math.random())}>
                             {x > 0.5 ? <FavoriteBorderIcon /> : <FavoriteIcon />}
                         </IconButton>

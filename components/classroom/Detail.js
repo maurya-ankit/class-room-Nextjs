@@ -2,18 +2,29 @@ import { makeStyles, Typography, Paper } from '@material-ui/core'
 import React from 'react'
 import Cards from './detail/Cards';
 import Posts from './detail/Posts';
-const useStyle = makeStyles({
-
-})
+const useStyle = makeStyles((theme) => ({
+    root: {
+        background: theme.palette.alternate.main,
+        padding: 20,
+        borderRadius: 20
+    },
+    title: {
+        marginLeft: 20,
+    },
+    subtitle: {
+        marginLeft: 20,
+        // marginBottom: 10,
+    },
+}))
 const Detail = () => {
     const classes = useStyle();
     return (
-        <Paper style={{ padding: 20, }}>
-            <Typography variant="h6">Hey There, Ankit Maurya!</Typography>
-            <Typography variant="subtitle2">Welcome Back, Keep going</Typography>
+        <div className={classes.root}>
+            <Typography variant="h6" className={classes.title}>Hey There, Ankit Maurya!</Typography>
+            <Typography variant="subtitle2" className={classes.subtitle}>Welcome Back, Keep going</Typography>
             <Cards />
             <Posts />
-        </Paper>
+        </div>
     )
 }
 

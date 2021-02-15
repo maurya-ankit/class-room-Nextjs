@@ -4,6 +4,7 @@ import Image from 'next/image'
 const useStyle = makeStyles({
     btn: {
         marginInline: 10,
+        borderRadius: 10,
     },
     imgBox: {
         margin: 10,
@@ -28,7 +29,7 @@ const TabGrid = () => {
                 >
                     <Grid item md={8}>
                         {tabs.map((tab) =>
-                            <Button key={tab} variant="outlined" className={classes.btn}>
+                            <Button key={tab} variant="outlined" className={classes.btn} aria-label="tab button">
                                 {tab}
                             </Button>
                         )}
@@ -36,7 +37,7 @@ const TabGrid = () => {
                     <Grid item>
                     </Grid>
                     <Grid item md={2}>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" className={classes.btn} aria-label="follow">
                             Follow
                         </Button>
                     </Grid>
@@ -47,7 +48,7 @@ const TabGrid = () => {
                 className={classes.imgBox}>
                 {[1, 2, 3, 4, 5, 6].map((n) =>
                     <Grid item key={n} className={classes.item}>
-                        <Image src="/images/Profile-Pic.jpg" width={200} height={200} className={classes.img} />
+                        <Image src="/images/Profile-Pic.jpg" width={200} height={200} className={classes.img} alt="post items images" />
                     </Grid>
                 )}
 

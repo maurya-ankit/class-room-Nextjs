@@ -18,13 +18,19 @@ const useStyle = makeStyles({
     space: {
         marginTop: 5,
         marginBottom: 5,
+    },
+    div: {
+        position: "relative",
+        marginTop: -130
     }
 })
 const Personal = () => {
     const classes = useStyle();
     return (
         <Container maxWidth="xs" className={classes.root}>
-            <Image src="/images/Profile-Pic.jpg" width={200} height={200} className={classes.profilePic} />
+            <div className={classes.div}>
+                <Image src="/images/Profile-Pic.jpg" width={200} height={200} className={classes.profilePic} alt="user profile picture" />
+            </div>
             <Grid container
                 justify="space-around"
                 alignContent="center"

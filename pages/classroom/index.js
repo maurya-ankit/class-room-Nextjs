@@ -9,68 +9,40 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import Layout from '../../components/layout/classroom/Layout'
 
-const useStyle = makeStyles({
-    // sidebar: {
-    //     height: 1080,
-    // }
-})
+const useStyle = makeStyles((theme) => ({
+    root: {
+        background: theme.palette.alternate.main,
+        padding: 20,
+        borderRadius: 20,
+        margin: 20,
+    },
+}))
 const Index = () => {
     const classes = useStyle();
     return (
-        <>
+        <Layout>
             <Head>
                 <title>classroom</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <AppBar position="relative" color="inherit" elevation={0}>
-                <Toolbar>
-                    <Grid container
-                        spacing={1}
-                        justify="center"
-                    >
-                        <Grid item>
-                            <Typography variant="h6">
-                                Classroom
-                            </Typography>
-                        </Grid>
-                        <Grid item md>
 
-                        </Grid>
-                        <Grid item>
-                            <IconButton color="primary" >
-                                <NotificationsActiveIcon fontSize="small" />
-                            </IconButton>
-                            <IconButton color="primary" >
-                                <AssignmentIcon fontSize="small" />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-
-                </Toolbar>
-            </AppBar>
             <Grid
                 container
                 spacing={4}
-                direction="row"
                 justify="flex-start"
                 alignItems="flex-start"
-                wrap="nowrap"
 
             >
                 <Grid item md={2}>
-                    <Paper elevation={0} className={classes.sidebar}>
-                        <Sidebar />
-                    </Paper>
+                    <Sidebar />
                 </Grid>
-                <Grid item md={8}>
-                    <Paper elevation={0}>
-                        <TabGrid />
-                    </Paper>
+                <Grid item md={8} className={classes.root}>
+                    <TabGrid />
                 </Grid>
             </Grid>
-
-        </>
+        </Layout>
     )
 }
 

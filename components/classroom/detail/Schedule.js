@@ -21,16 +21,18 @@ const useStyle = makeStyles((theme) => ({
         backgroundColor: "#000"
     },
     root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-        padding: 50,
+        background: theme.palette.alternate.main,
+        padding: 20,
+        borderRadius: 20,
+        margin: 20,
     },
 }))
 const Schedule = () => {
     const classes = useStyle();
     return (
-        <>
+        <div
+            className={classes.root}
+        >
             <Grid
                 container
                 spacing={2}
@@ -41,7 +43,7 @@ const Schedule = () => {
 
             >
                 <Grid item>
-                    <Image src="/images/Profile-Pic.jpg" height={100} width={100} className={classes.img} />
+                    <Image src="/images/Profile-Pic.jpg" height={100} width={100} className={classes.img} alt="Teacher Profile" />
 
                 </Grid>
                 <Grid item>
@@ -78,7 +80,7 @@ const Schedule = () => {
                     </Typography>
                 </Grid>
             </Grid>
-            <List className={classes.root}>
+            <List>
                 <ListItem>
                     <ListItemAvatar>
                         <Avatar>
@@ -104,7 +106,7 @@ const Schedule = () => {
                     <ListItemText primary="Vacation" secondary="July 20, 2014" />
                 </ListItem>
             </List>
-        </>
+        </div>
     )
 }
 

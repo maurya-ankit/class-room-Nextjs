@@ -18,11 +18,9 @@ const TabGrid = () => {
                 <Grid
                     container
                     spacing={1}
-                    direction="row"
                     justify="center"
                     alignItems="center"
                     alignContent="center"
-                    wrap="nowrap"
 
                 >
                     <Grid item>

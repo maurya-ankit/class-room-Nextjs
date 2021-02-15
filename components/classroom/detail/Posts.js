@@ -1,4 +1,4 @@
-import { Button, Typography, Grid, InputBase } from '@material-ui/core'
+import { Button, Typography, Grid, InputBase, Divider, IconButton } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -8,74 +8,86 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-const useStyles = makeStyles({
+import Image from 'next/image';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
-});
+    title: {
+        margin: 10,
+        color: "#a23123"
+    },
+    div: {
+        background: theme.palette.alternate.dark,
+        padding: 20,
+        borderRadius: 20,
+        marginBottom: 10,
+    },
+}));
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, <Button variant="contained" color="secondary">open</Button>),
-    createData('Ice cream sandwich', 237, 9.0, 37, <Button variant="contained" color="secondary">open</Button>),
-    createData('Eclair', 262, 16.0, 24, <Button variant="contained" color="secondary">open</Button>),
-    createData('Cupcake', 305, 3.7, 67, <Button variant="contained" color="secondary">open</Button>),
-    createData('Gingerbread', 356, 16.0, 49, <Button variant="contained" color="secondary">open</Button>),
-];
 const Posts = () => {
     const classes = useStyles();
+    const posts = [{ "title": "First Post", "view": 22, "Posted": "12:00 IST", "author": "Ankit Maurya" }, { "title": "Announsment Post", "view": 22, "Posted": "12:00 IST", "author": "Amit Maurya" }, { "title": "Exam Timing", "view": 22, "Posted": "12:00 IST", "author": "Ayush Khare" }, { "title": "Class Reschedule", "view": 22, "Posted": "12:00 IST", "author": "Shreyash Nigam" }, { "title": "Assignment 1", "view": 22, "Posted": "12:00 IST", "author": "Akash Kumar" }];
     return (
         <>
-            <Typography variant="body1">Posts</Typography>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Post Title</TableCell>
-                            <TableCell align="right">Aurthor</TableCell>
-                            <TableCell align="right">Posted On</TableCell>
-                            <TableCell align="right">Number of Views</TableCell>
-                            <TableCell align="right"> Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Grid
-                container
-                spacing={1}
-                justify="center"
-                alignItems="center"
-                alignContent="center"
+            <Typography variant="body1" className={classes.title}>Recent Posts</Typography>
 
-            >
-                <Grid item md>
+            {posts.map((post, index) => (
+                <Grid container spacing={1} className={classes.div} key={index} component={Button} aria-label="post list">
+                    <Grid container spacing={1}
+                        alignContent="center"
+                        alignItems="center"
+                    >
+                        <Grid item>
+                            <Image src="/images/undraw_Questions_re_1fy7.svg" height={50} width={50} alt="undraw svg" />
+
+
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="body1">{post.title}</Typography>
+                        </Grid>
+
+                    </Grid>
+                    <Grid container spacing={1}
+                        alignContent="center"
+                        alignItems="center"
+                        justify="center"
+                    >
+                        <Grid item md={3}>
+                            <SupervisedUserCircleIcon />
+                            <Typography variant="body1">{post.view}</Typography>
+                        </Grid>
+                        <Divider orientation="vertical" flexItem />
+                        <Grid item md={3}>
+                            <ScheduleIcon />
+                            <Typography variant="body1">{post.Posted}</Typography>
+                        </Grid>
+                        <Divider orientation="vertical" flexItem />
+
+                        <Grid item md>
+
+                            <AccountCircleIcon md={2} />
+                            <Typography variant="body1">{post.author}</Typography>
+                        </Grid>
+                        {/* <Grid item>
+                            <IconButton>
+                                <NavigateNextIcon />
+                            </IconButton>
+                        </Grid> */}
+
+                    </Grid>
 
                 </Grid>
-                <Grid item>
-                    <Button variant="text" color="default">
-                        view more ...
-</Button>
-                </Grid>
-            </Grid>
+            ))}
         </>
     )
 }
 
 export default Posts
+
+
