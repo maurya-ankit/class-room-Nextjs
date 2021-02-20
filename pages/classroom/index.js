@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Grid, Paper, Avatar, makeStyles } from '@material-ui/core'
 import Sidebar from '../../components/classroom/Sidebar'
@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Layout from '../../components/layout/classroom/Layout'
-
+import baseInstance from '../../backend/api'
 const useStyle = makeStyles((theme) => ({
     root: {
         background: theme.palette.alternate.main,
@@ -21,6 +21,17 @@ const useStyle = makeStyles((theme) => ({
 }))
 const Index = () => {
     const classes = useStyle();
+
+    const [data, setData] = useState([]);
+    useEffect(async () => {
+        baseInstance.get('classroom/',)
+            .then(response => {
+                setData(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.warn(err))
+    }, [])
+
     return (
         <Layout>
             <Head>
@@ -39,11 +50,10 @@ const Index = () => {
                     <Sidebar />
                 </Grid>
                 <Grid item md={8} className={classes.root}>
-                    <TabGrid />
+                    <TabGrid data={data} />
                 </Grid>
             </Grid>
         </Layout>
     )
 }
-
 export default Index

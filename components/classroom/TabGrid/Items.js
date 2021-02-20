@@ -4,10 +4,13 @@ import { Button, IconButton, makeStyles, Typography } from '@material-ui/core'
 import Image from 'next/image'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-const useStyle = makeStyles({
+import Link from 'next/link'
+const useStyle = makeStyles((theme) => ({
     grid: {
+        background: theme.palette.secondary.main,
         margin: 10,
         padding: 10,
+        borderRadius: 20
     },
     img: {
         borderRadius: "10%",
@@ -18,13 +21,19 @@ const useStyle = makeStyles({
     },
     btn: {
         borderRadius: 10,
-    }
-})
+    },
+    div: {
+        background: theme.palette.secondary.main,
+        padding: 20,
+        borderRadius: 20,
+        marginBottom: 20,
+    },
+}))
 
-const Items = () => {
+const Items = (props) => {
+    const { data } = props;
     const classes = useStyle();
     const images = ["First", "Second", "Third", "Fourth", "Fifth", "sixth", "seventh"]
-    const [x, setX] = React.useState(0);
     return (
         <>
             <Grid
@@ -35,31 +44,51 @@ const Items = () => {
 
             >
                 <Grid item>
-                    <Typography style={{ marginLeft: 20 }}>Popular Now</Typography>
+                    <Typography style={{ marginLeft: 20 }}>All Classrooms</Typography>
                 </Grid>
                 <Grid item md>
 
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                     <Button color="primary" variant="outlined" className={classes.btn} aria-label="View More">View More</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
             <Grid
                 container
                 spacing={1}
                 direction="row"
-                justify="center"
+                justify="flex-start"
                 alignItems="center"
                 alignContent="center"
 
             >
-                {images.map((image) =>
-                    <Grid item className={classes.grid} key={image}>
-                        <Image src="/images/Profile-Pic.jpg" height={200} width={200} className={classes.img} alt="classroom grids" />
-                        <IconButton className={classes.icon} onClick={() => setX(Math.random())}>
-                            {x > 0.5 ? <FavoriteBorderIcon /> : <FavoriteIcon />}
-                        </IconButton>
-                    </Grid>
+                {data.map((classroom) =>
+                    <Link href={`/classroom/${classroom.id}`} key={classroom.id}>
+                        <Grid item className={classes.grid} md={5} component={Button}>
+                            <Grid
+                                container
+                                spacing={1}
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="center"
+                                alignContent="center"
+                                style={{ marginInline: 5 }}
+                                wrap="nowrap"
+
+                            >
+                                <Grid item md>
+                                    <Image src="/images/undraw_Publish_article_re_3x8h.svg" height={200} width={200} className={classes.img} alt="classroom grids" />
+                                </Grid>
+                                <Grid item md>
+                                    <Typography variant="subtitle1" className={classes.style} > class id {classroom.id}</Typography>
+                                    <Typography variant="h5" className={classes.style}> {classroom.name}</Typography>
+                                    <Typography variant="subtitle2" className={classes.style} color="textSecondary"> Total Mamber :{classroom.total_members}</Typography>
+
+
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Link>
                 )}
 
             </Grid>
@@ -67,4 +96,8 @@ const Items = () => {
     )
 }
 
+
+
 export default Items
+
+

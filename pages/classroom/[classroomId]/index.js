@@ -7,9 +7,9 @@ import Sidebar from '../../../components/classroom/Sidebar'
 import Schedule from '../../../components/classroom/detail/Schedule'
 import Detail from '../../../components/classroom/Detail'
 import Layout from '../../../components/layout/classroom/Layout'
-const Post = () => {
-    const router = useRouter()
-    const { dynamic } = router.query
+const Post = ({ classroomId }) => {
+    console.log(classroomId)
+
 
     return (
         <Layout>
@@ -31,7 +31,7 @@ const Post = () => {
                     <Sidebar />
                 </Grid>
                 <Grid item md>
-                    <Detail />
+                    <Detail classroomId={classroomId} />
                 </Grid>
                 <Grid item md={3}>
                     <Schedule />
@@ -41,5 +41,9 @@ const Post = () => {
         </Layout>
     )
 }
+Post.getInitialProps = async ({ query }) => {
+    const { classroomId } = query
 
+    return { classroomId }
+}
 export default Post

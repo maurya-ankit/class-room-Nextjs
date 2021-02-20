@@ -10,7 +10,7 @@ const useStyle = makeStyles({
     },
 })
 
-const TabGrid = () => {
+const TabGrid = (props) => {
     const classes = useStyle();
     return (
         <>
@@ -64,7 +64,7 @@ const TabGrid = () => {
                 </Grid>
             </Toolbar>
             <Banner />
-            <Items />
+            <Items data={props.data} />
 
 
         </>

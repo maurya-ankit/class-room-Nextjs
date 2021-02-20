@@ -16,14 +16,15 @@ const useStyle = makeStyles((theme) => ({
         // marginBottom: 10,
     },
 }))
-const Detail = () => {
+const Detail = (props) => {
     const classes = useStyle();
+    const { classroomId } = props;
     return (
         <div className={classes.root}>
             <Typography variant="h6" className={classes.title}>Hey There, Ankit Maurya!</Typography>
             <Typography variant="subtitle2" className={classes.subtitle}>Welcome Back, Keep going</Typography>
-            <Cards />
-            <Posts />
+            <Cards classroomId={classroomId} />
+            <Posts classroomId={classroomId} />
         </div>
     )
 }

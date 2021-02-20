@@ -11,7 +11,8 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-
+import { useState, useEffect } from 'react'
+import getInstance from '../../../backend/api'
 const useStyle = makeStyles((theme) => ({
     root: {
         background: theme.palette.alternate.dark,
@@ -35,16 +36,35 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-const Info = () => {
+const Info = (props) => {
     const classes = useStyle();
-    const messages = [
-        { "time": "12:01 pm", "author": "Ankit Maurya", "message": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, eligendi! Excepturi sed at magnam error assumenda laudantium, ab perspiciatis voluptatum. Booi" },
-        { "time": "11:01 pm", "author": "Ayush Khare", "message": "Hey Booi" },
-        { "time": "11:01 pm", "author": "Ayush Khare", "message": "Hey Booi" },
-        { "time": "11:01 pm", "author": "Ayush Khare", "message": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, eligendi! Excepturi sed at magnam error assumenda laudantium, ab perspiciatis voluptatum. Booi" }
-    ]
+    const { classroomId, postId } = props;
+    // const [post, setPost] = useState(null);
+    // const [comments, setComments] = useState(null);
+    const { post, comments } = props;
+    // console.log(comments, post)
+
+    // posts / comments /? classroom = 2 & post=1
+    // useEffect(async () => {
+    //     getInstance.get(`posts/${postId}?classroom=${classroomId}`,)
+    //         .then(response => {
+    //             setPost(response.data);
+    //             console.log(response.data);
+    //         })
+    //         .catch(err => console.warn(err))
+    // }, [])
+
+    // useEffect(async () => {
+    //     getInstance.get(`posts/comments/?classroom=${classroomId}&post=${postId}`,)
+    //         .then(response => {
+    //             setComments(response.data);
+    //             console.log(response.data);
+    //         })
+    //         .catch(err => console.warn(err))
+    // }, [])
     return (
         <div >
+
             <Grid container spacing={1}
                 justify="center"
                 alignItems="center"
@@ -65,37 +85,38 @@ const Info = () => {
                     </IconButton>
                 </Grid>
             </Grid>
-            <Grid container spacing={1}
-                justify="center"
-                // alignItems="center"
-                // alignContent="center"
-                className={classes.root}
-                direction="column"
-            >
-                <Grid item >
-                    <Typography variant="subtitle2" color="textSecondary">
-                        Author : Ankit Maurya
+            { post &&
+                <Grid container spacing={1}
+                    justify="center"
+                    // alignItems="center"
+                    // alignContent="center"
+                    className={classes.root}
+                    direction="column"
+                >
+                    <Grid item >
+                        <Typography variant="subtitle2" color="textSecondary">
+                            Author : {post.author}
+                        </Typography>
+                    </Grid>
+                    <Grid item >
+                        <Typography variant="caption" color="textSecondary">
+                            Date: 12/01/2020 12:00 IST
                     </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="h5" color="textPrimary">
+                            {post.title}
+                        </Typography>
+                    </Grid>
+                    <Divider style={{ margin: 10 }} />
+                    <Grid item>
+                        <Typography variant="body2" color="textSecondary">
+                            {post.content}
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item >
-                    <Typography variant="caption" color="textSecondary">
-                        Date: 12/01/2020 12:00 IST
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <Typography variant="h5" color="textPrimary">
-                        Assignment 2 : Make a pdf and write everything
-                    </Typography>
-                </Grid>
-                <Divider style={{ margin: 10 }} />
-                <Grid item>
-                    <Typography variant="body2" color="textSecondary">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed labore nemo eius quas adipisci maxime iusto vel, repellendus debitis rem molestias at asperiores? Excepturi, ut numquam laboriosam magnam dolor unde!
-                    </Typography>
-                </Grid>
-            </Grid>
 
-
+            }
             <Grid
                 container
                 spacing={1}
@@ -116,8 +137,8 @@ const Info = () => {
                 </Grid>
             </Grid>
 
-            <Timeline align="left" className={classes.timeline}>
-                {messages.map((message, index) => (
+            { comments && <Timeline align="left" className={classes.timeline}>
+                {comments.map((comment, index) => (
                     <TimelineItem key={index}>
                         <TimelineOppositeContent style={{ flex: 0 }}>
 
@@ -126,7 +147,7 @@ const Info = () => {
                             <TimelineDot>
                                 <FastfoodIcon />
                             </TimelineDot>
-                            {index % 2 === 0 ? <TimelineConnector /> : null}
+                            {index < comments.length - 1 ? <TimelineConnector /> : null}
                         </TimelineSeparator>
                         <TimelineContent className={classes.timelineItem}>
                             <div >
@@ -140,24 +161,25 @@ const Info = () => {
                                 >
                                     <Grid item >
                                         <Typography variant="subtitle1">
-                                            {message.author}
+                                            {comment.author}
                                         </Typography>
                                     </Grid>
                                     <Grid item >
                                         <Typography variant="caption" color="textSecondary">
-                                            Date: 12/01/2020 12:00 IST
-                                </Typography>
+                                            Date: {new Date(`${comment.created_at}`).toLocaleString()}
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                                 {/* <Divider /> */}
 
-                                <Typography variant="body1" color="textSecondary">{message.message}</Typography>
+                                <Typography variant="body1" color="textSecondary">{comment.content}</Typography>
 
                             </div>
                         </TimelineContent>
                     </TimelineItem>
                 ))}
             </Timeline>
+            }
 
         </div>
     )
