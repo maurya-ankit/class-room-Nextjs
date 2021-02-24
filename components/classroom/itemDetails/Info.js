@@ -38,30 +38,7 @@ const useStyle = makeStyles((theme) => ({
 
 const Info = (props) => {
     const classes = useStyle();
-    const { classroomId, postId } = props;
-    // const [post, setPost] = useState(null);
-    // const [comments, setComments] = useState(null);
     const { post, comments } = props;
-    // console.log(comments, post)
-
-    // posts / comments /? classroom = 2 & post=1
-    // useEffect(async () => {
-    //     getInstance.get(`posts/${postId}?classroom=${classroomId}`,)
-    //         .then(response => {
-    //             setPost(response.data);
-    //             console.log(response.data);
-    //         })
-    //         .catch(err => console.warn(err))
-    // }, [])
-
-    // useEffect(async () => {
-    //     getInstance.get(`posts/comments/?classroom=${classroomId}&post=${postId}`,)
-    //         .then(response => {
-    //             setComments(response.data);
-    //             console.log(response.data);
-    //         })
-    //         .catch(err => console.warn(err))
-    // }, [])
     return (
         <div >
 
@@ -166,7 +143,7 @@ const Info = (props) => {
                                     </Grid>
                                     <Grid item >
                                         <Typography variant="caption" color="textSecondary">
-                                            Date: {new Date(`${comment.created_at}`).toLocaleString()}
+                                            Date: {comment.created_at}
                                         </Typography>
                                     </Grid>
                                 </Grid>

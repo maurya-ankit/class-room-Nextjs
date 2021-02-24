@@ -3,7 +3,7 @@ import Header from "./Header"
 
 const Layout = (props) => {
     return <>
-        <Header />
+        <Header profileObj={props.profileObj} />
         <>{props.children}</>
         <Footer />
     </>

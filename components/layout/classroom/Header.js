@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import { Button, Grid } from '@material-ui/core'
-const Header = () => {
+const Header = ({ profileObj }) => {
     return (
         <div>
             <AppBar position="relative" color="primary" elevation={0}>
@@ -13,6 +13,7 @@ const Header = () => {
                     <Grid container
                         spacing={1}
                         justify="center"
+                        alignItems="center"
                     >
                         <Grid item>
                             <Typography variant="h6">
@@ -30,7 +31,7 @@ const Header = () => {
                                 <AssignmentIcon />
                             </IconButton>
                             <Typography variant="caption" color="initial" >
-                                ankit@gmail.com
+                                {profileObj.name}
                             </Typography>
                         </Grid>
                     </Grid>

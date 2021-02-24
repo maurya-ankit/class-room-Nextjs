@@ -34,21 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Posts = (props) => {
     const classes = useStyles();
-    const [posts, setPosts] = useState(null);
-    useEffect(async () => {
-        getInstance.get(`posts/?classroom=${props.classroomId}`,)
-            .then(response => {
-                setPosts(response.data);
-                console.log(response.data);
-            })
-            .catch(err => console.warn(err))
-    }, [])
+    const { classroom, posts } = props;
     return (
         <>
             {posts && <><Typography variant="body1" className={classes.title}>Recent Posts</Typography>
 
                 { posts.map((post, index) => (
-                    <Link href={`/classroom/${props.classroomId}/${post.id}`} key={index}>
+                    <Link href={`/classroom/${classroom.id}/${post.id}`} key={index}>
                         <Grid container spacing={1} className={classes.div} component={Button} aria-label="post list">
                             <Grid container spacing={1}
                                 alignContent="center"

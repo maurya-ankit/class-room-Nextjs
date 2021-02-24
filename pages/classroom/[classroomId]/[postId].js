@@ -8,6 +8,9 @@ import Posts from '../../../components/classroom/detail/Posts'
 import Info from '../../../components/classroom/itemDetails/Info'
 import Submit from '../../../components/classroom/itemDetails/Submit'
 import getInstance from '../../../backend/api'
+import Cookies from 'cookies'
+import { parseCookies } from "../../../helpers/"
+
 const useStyle = makeStyles((theme) => ({
     // shape: {
     // background: theme.palette.alternate.main,
@@ -15,10 +18,10 @@ const useStyle = makeStyles((theme) => ({
     //     borderBottom: `1px solid ${colors.grey[200]}`,
     // },
 }))
-const Index = ({ classroomId, postId, post, comments }) => {
+const Index = ({ classroomId, postId, post, comments, profileObj }) => {
     const classes = useStyle();
     return (
-        <Layout>
+        <Layout profileObj={JSON.parse(profileObj)}>
             <div className={classes.shape}>
 
 
@@ -46,23 +49,33 @@ const Index = ({ classroomId, postId, post, comments }) => {
         </Layout>
     )
 }
-Index.getInitialProps = async ({ query }) => {
+Index.getInitialProps = async ({ query, req }) => {
     const { classroomId, postId } = query
-    // async () => {
-    //     getInstance.get(,)
-    //         .then(response => {
-    //             comments = response.data;
-    //             console.log(response.data);
-    //         })
-    //         .catch(err => console.warn(err))
-    // }
-    const res2 = await fetch(`https://ankitm.herokuapp.com/posts/${postId}?classroom=${classroomId}`, { headers: { 'Authorization': 'Token 7f0198d42f1623bd7c8460dae32e4d5a858151a13473271f61d599e79bc8a1d0' } })
+    const data = parseCookies(req)
+    const authToken = data.authToken
+    const profileObj = data.profileObj
+    const res2 = await fetch(
+        `${process.env.apiBaseUrl}/posts/${postId}?classroom=${classroomId}`,
+        {
+            headers: {
+                'Authorization': `Token ${authToken}`
+            }
+        })
+
     const post = await res2.json()
-    const res = await fetch(`https://ankitm.herokuapp.com/posts/comments/?classroom=${classroomId}&post=${postId}`, { headers: { 'Authorization': 'Token 7f0198d42f1623bd7c8460dae32e4d5a858151a13473271f61d599e79bc8a1d0' } })
+    const res = await fetch(
+        `${process.env.apiBaseUrl}/posts/comments/?classroom=${classroomId}&post=${postId}`,
+        {
+            headers:
+            {
+                'Authorization': `Token ${authToken}`
+            }
+        }
+    )
     const comments = await res.json()
 
 
 
-    return { classroomId, postId, post, comments }
+    return { post, comments, profileObj }
 }
 export default Index

@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography'
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import Layout from '../../components/layout/classroom/Layout'
 import baseInstance from '../../backend/api'
+import { parseCookies } from "../../helpers/"
+
 const useStyle = makeStyles((theme) => ({
     root: {
         background: theme.palette.alternate.main,
@@ -19,21 +21,10 @@ const useStyle = makeStyles((theme) => ({
         margin: 20,
     },
 }))
-const Index = () => {
+const Index = ({ classrooms, profileObj }) => {
     const classes = useStyle();
-
-    const [data, setData] = useState([]);
-    useEffect(async () => {
-        baseInstance.get('classroom/',)
-            .then(response => {
-                setData(response.data);
-                console.log(response.data);
-            })
-            .catch(err => console.warn(err))
-    }, [])
-
     return (
-        <Layout>
+        <Layout profileObj={JSON.parse(profileObj)}>
             <Head>
                 <title>classroom</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -50,10 +41,27 @@ const Index = () => {
                     <Sidebar />
                 </Grid>
                 <Grid item md={8} className={classes.root}>
-                    <TabGrid data={data} />
+                    <TabGrid data={classrooms} />
                 </Grid>
             </Grid>
         </Layout>
     )
 }
+Index.getInitialProps = async ({ req }) => {
+    const data = parseCookies(req)
+    const authToken = data.authToken
+    const profileObj = data.profileObj
+    const res1 = await fetch(
+        `${process.env.apiBaseUrl}/classroom/`,
+        {
+            headers: {
+                'Authorization': `Token ${authToken}`
+            }
+        })
+
+    const classrooms = await res1.json()
+
+    return { classrooms, profileObj }
+}
+
 export default Index

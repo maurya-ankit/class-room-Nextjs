@@ -23,15 +23,7 @@ const useStyle = makeStyles((theme) => ({
 
 const Cards = (props) => {
     const classes = useStyle();
-    const [classroom, setClassroom] = useState(false);
-    useEffect(async () => {
-        getInstance.get(`classroom/${props.classroomId}`,)
-            .then(response => {
-                setClassroom(response.data);
-                console.log(response.data);
-            })
-            .catch(err => console.warn(err))
-    }, [])
+    const { classroom } = props;
     return (
         <>
             <Typography variant="body1" className={classes.title}>Recent Assesment</Typography>
