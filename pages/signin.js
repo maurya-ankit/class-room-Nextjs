@@ -58,7 +58,7 @@ const Signin = () => {
         axios.post(`${process.env.apiBaseUrl}/auth/login/`, { "username": username, "password": password })
             .then(response => {
                 console.log(response.data)
-                cookieCutter.set('authToken', response.data.token)
+                setCookie("authToken", response.data.token, { path: '/' });
                 console.log(cookieCutter.get('authToken'))
             })
             .catch(err => console.log(err))
