@@ -1,9 +1,11 @@
 import axios from 'axios'
-
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 const getInstance = axios.create({
 
-    baseURL: `https://ankitm.herokuapp.com/`
+    // baseURL: `https://ankitm.herokuapp.com/`
+    baseURL: `${process.env.apiBaseUrl}/`
 
 });
-getInstance.defaults.headers.common['Authorization'] = 'Token 7f0198d42f1623bd7c8460dae32e4d5a858151a13473271f61d599e79bc8a1d0'
+getInstance.defaults.headers.common['Authorization'] = `Token ${cookies.get("authToken")}`
 export default getInstance;

@@ -2,6 +2,8 @@ import { Typography, Grid, makeStyles } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import getInstance from '../../../backend/api'
+import Skeleton from '@material-ui/lab/Skeleton';
+
 const useStyle = makeStyles((theme) => ({
     div: {
         background: theme.palette.secondary.main,
@@ -23,12 +25,14 @@ const useStyle = makeStyles((theme) => ({
 
 const Cards = (props) => {
     const classes = useStyle();
-    const [classroom, setClassroom] = useState(false);
+    const [classroom, setClassroom] = useState({});
+    const [loading, setLoading] = useState(true);
     useEffect(async () => {
         getInstance.get(`classroom/${props.classroomId}`,)
             .then(response => {
                 setClassroom(response.data);
                 console.log(response.data);
+                setLoading(false)
             })
             .catch(err => console.warn(err))
     }, [])
@@ -49,11 +53,22 @@ const Cards = (props) => {
                     <Grid item className={classes.grid}>
                         <Image src="/images/undraw_Short_bio_re_fmx0.svg" width={350} height={200} className={classes.img} alt="undraw svg" />
                     </Grid>
-                    {classroom && <Grid item className={classes.grid}>
-                        <Typography variant="subtitle1" className={classes.style} > class id:{" "}{classroom.id} </Typography>
-                        <Typography variant="h5" className={classes.style}>{classroom.name} </Typography>
-                        <Typography variant="subtitle2" className={classes.style} color="textSecondary"> Total Mamber:{" "}{classroom.total_members} </Typography>
-                    </Grid>}
+                    <Grid item className={classes.grid}>
+                        {loading ?
+                            <>
+                                <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
+                                <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
+                                <Skeleton animation="wave" height={10} width="40%" style={{ marginBottom: 6 }} />
+                            </>
+                            : <>
+                                <Typography variant="subtitle1" className={classes.style} > class id:{" "}{classroom.id} </Typography>
+                                <Typography variant="h5" className={classes.style}>{classroom.name} </Typography>
+                                <Typography variant="subtitle2" className={classes.style} color="textSecondary"> Total Mamber:{" "}{classroom.total_members} </Typography>
+                            </>
+                        }
+
+
+                    </Grid>
                 </Grid>
             </div>
         </>

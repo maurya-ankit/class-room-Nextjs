@@ -1,4 +1,4 @@
-import { Button, Typography, Grid, InputBase, Divider, IconButton } from '@material-ui/core'
+import { Button, Typography, Grid, InputBase, Divider, IconButton, Avatar } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -15,6 +15,8 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import getInstance from '../../../backend/api'
+import Skeleton from '@material-ui/lab/Skeleton';
+
 const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
@@ -34,18 +36,88 @@ const useStyles = makeStyles((theme) => ({
 
 const Posts = (props) => {
     const classes = useStyles();
-    const [posts, setPosts] = useState(null);
+    const [posts, setPosts] = useState([{}]);
+    const [loading, setLoading] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [newComment, setNewComment] = useState("");
+    const [update, setUpdate] = useState(false);
     useEffect(async () => {
         getInstance.get(`posts/?classroom=${props.classroomId}`,)
             .then(response => {
                 setPosts(response.data);
                 console.log(response.data);
+                setLoading(false)
             })
             .catch(err => console.warn(err))
     }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+    }
     return (
         <>
-            {posts && <><Typography variant="body1" className={classes.title}>Recent Posts</Typography>
+            <Grid
+                container
+                spacing={1}
+                justify="space-between"
+                alignItems="center"
+                alignContent="center"
+                className={classes.addComment}
+            >
+                <Grid item>
+                    <Button variant="contained"
+                        color={open ? "secondary" : "primary"}
+                        // startIcon={open ? <CancelIcon /> : null}
+                        aria-label="Add Comment"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <>cancel </> : <>Add Comment</>}
+                    </Button>
+                </Grid>
+            </Grid>
+            {open && <form onSubmit={handleSubmit} noValidate={false}>
+                <Grid container
+                    spacing={1}
+                    alignContent="center"
+                    alignItems="center"
+                    className={classes.commentBox}
+                >
+                    <Grid item md>
+                        <InputBase
+                            id="outlined-textarea"
+                            label="post title"
+                            placeholder="Enter post Title"
+                            // multiline
+                            fullWidth
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            variant="filled"
+                            required
+                        />
+                        <InputBase
+                            id="outlined-textarea"
+                            label="post content"
+                            placeholder="Enter post content"
+                            multiline
+                            fullWidth
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            // variant="filled"
+                            required
+                        />
+                    </Grid>
+                    <Grid item md={2}>
+                        <IconButton aria-label="add comment" type="submit" >
+                            {/* <SendIcon /> */}
+                        </IconButton>
+                    </Grid>
+                </Grid>
+
+
+            </form>
+            }
+            <><Typography variant="body1" className={classes.title}>Recent Posts</Typography>
 
                 { posts.map((post, index) => (
                     <Link href={`/classroom/${props.classroomId}/${post.id}`} key={index}>
@@ -59,8 +131,12 @@ const Posts = (props) => {
 
 
                                 </Grid>
-                                <Grid item>
-                                    <Typography variant="body1">{post.title}</Typography>
+                                <Grid item md>
+                                    <Typography variant="body1">
+
+                                        {loading ? <Skeleton animation="wave" width="200" style={{ marginBottom: 6 }} /> : <> {post.title}</>}
+
+                                    </Typography>
                                 </Grid>
 
                             </Grid>
@@ -82,9 +158,19 @@ const Posts = (props) => {
                             <Divider orientation="vertical" flexItem /> */}
 
                                 <Grid item md>
+                                    {loading ?
+                                        <>
+                                            <Skeleton variant="circle" width={40} height={40} />
+                                            {/* <Skeleton animation="wave" style={{ marginBottom: 6 }} /> */}
+                                        </>
+                                        :
+                                        <>
+                                            <Avatar alt="Remy Sharp" src={post.owner_avatar_url} />
+                                            {/* <Typography variant="body1">{post.author}</Typography> */}
+                                        </>
+                                    }
 
-                                    <AccountCircleIcon md={2} />
-                                    <Typography variant="body1">{post.author}</Typography>
+
                                 </Grid>
                                 {/* <Grid item>
                             <IconButton>
@@ -98,7 +184,6 @@ const Posts = (props) => {
                     </Link>
                 ))}
             </>
-            }
         </>
     )
 }

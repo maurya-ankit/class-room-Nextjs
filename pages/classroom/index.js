@@ -29,7 +29,7 @@ const Index = () => {
                 setData(response.data);
                 console.log(response.data);
             })
-            .catch(err => console.warn(err))
+            .catch(err => console.log(err))
     }, [])
 
     return (
