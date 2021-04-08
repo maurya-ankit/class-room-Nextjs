@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Posts = (props) => {
     const classes = useStyles();
+<<<<<<< HEAD
     const [posts, setPosts] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
@@ -55,6 +56,9 @@ const Posts = (props) => {
         e.preventDefault();
 
     }
+=======
+    const { classroom, posts } = props;
+>>>>>>> 850802202f74ed9e8be03897c0053b2792581b99
     return (
         <>
             <Grid
@@ -120,7 +124,7 @@ const Posts = (props) => {
             <><Typography variant="body1" className={classes.title}>Recent Posts</Typography>
 
                 { posts.map((post, index) => (
-                    <Link href={`/classroom/${props.classroomId}/${post.id}`} key={index}>
+                    <Link href={`/classroom/${classroom.id}/${post.id}`} key={index}>
                         <Grid container spacing={1} className={classes.div} component={Button} aria-label="post list">
                             <Grid container spacing={1}
                                 alignContent="center"

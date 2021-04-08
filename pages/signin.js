@@ -59,7 +59,11 @@ const Signin = () => {
             .then(response => {
                 console.log(response.data)
                 setCookie("authToken", response.data.token, { path: '/' });
+<<<<<<< HEAD
                 console.log(cookies.authToken)
+=======
+                console.log(cookieCutter.get('authToken'))
+>>>>>>> 850802202f74ed9e8be03897c0053b2792581b99
             })
             .catch(err => console.log(err))
     }
