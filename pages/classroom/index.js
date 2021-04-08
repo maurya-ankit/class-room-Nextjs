@@ -23,7 +23,6 @@ const useStyle = makeStyles((theme) => ({
 }))
 const Index = ({ classrooms, profileObj }) => {
     const classes = useStyle();
-<<<<<<< HEAD
 
     const [data, setData] = useState([]);
     useEffect(async () => {
@@ -35,8 +34,6 @@ const Index = ({ classrooms, profileObj }) => {
             .catch(err => console.log(err))
     }, [])
 
-=======
->>>>>>> 850802202f74ed9e8be03897c0053b2792581b99
     return (
         <Layout profileObj={JSON.parse(profileObj)}>
             <Head>

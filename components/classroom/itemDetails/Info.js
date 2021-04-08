@@ -47,7 +47,6 @@ const useStyle = makeStyles((theme) => ({
 
 const Info = (props) => {
     const classes = useStyle();
-<<<<<<< HEAD
     const { classroomId, postId } = props;
     const [post, setPost] = useState({});
     const [postLoading, setPostLoading] = useState(true);
@@ -88,9 +87,6 @@ const Info = (props) => {
             })
             .catch(err => console.log(err))
     }
-=======
-    const { post, comments } = props;
->>>>>>> 850802202f74ed9e8be03897c0053b2792581b99
     return (
         <div >
 
@@ -241,13 +237,9 @@ const Info = (props) => {
                                     </Grid>
                                     <Grid item md>
                                         <Typography variant="caption" color="textSecondary">
-<<<<<<< HEAD
                                             {commentsLoading ? <Skeleton animation="wave" style={{ marginBottom: 6 }} /> : <> {new Date(`${comment.created_at}`).toLocaleString()}</>}
 
 
-=======
-                                            Date: {comment.created_at}
->>>>>>> 850802202f74ed9e8be03897c0053b2792581b99
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -265,7 +257,7 @@ const Info = (props) => {
                 ))}
             </Timeline>
 
-        </div>
+        </div >
     )
 }
 
