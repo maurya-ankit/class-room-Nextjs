@@ -17,7 +17,7 @@ const useStyle = makeStyles((theme) => ({
 const Index = ({ classroomId, postId }) => {
     const classes = useStyle();
     return (
-        <Layout profileObj={JSON.parse(profileObj)}>
+        <Layout >
             <div className={classes.shape}>
 
 

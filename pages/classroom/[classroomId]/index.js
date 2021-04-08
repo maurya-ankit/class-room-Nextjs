@@ -9,11 +9,11 @@ import Detail from '../../../components/classroom/Detail'
 import Layout from '../../../components/layout/classroom/Layout'
 import Cookies from 'cookies'
 import { parseCookies } from "../../../helpers/"
-const Post = ({ classroom, posts, profileObj }) => {
+const Post = ({ classroomId }) => {
 
 
     return (
-        <Layout profileObj={JSON.parse(profileObj)}>
+        <Layout >
             <Head>
                 <title>classroom</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -32,7 +32,7 @@ const Post = ({ classroom, posts, profileObj }) => {
                     <Sidebar />
                 </Grid>
                 <Grid item md>
-                    <Detail classroom={classroom} posts={posts} />
+                    <Detail classroomId={classroomId} />
                 </Grid>
                 <Grid item md={3}>
                     <Schedule />
@@ -44,29 +44,6 @@ const Post = ({ classroom, posts, profileObj }) => {
 }
 Post.getInitialProps = async ({ query, req }) => {
     const { classroomId } = query
-    const data = parseCookies(req)
-    const authToken = data.authToken
-    const profileObj = data.profileObj
-    const res1 = await fetch(
-        `${process.env.apiBaseUrl}/classroom/${classroomId}`,
-        {
-            headers: {
-                'Authorization': `Token ${authToken}`
-            }
-        })
-
-    const classroom = await res1.json()
-    const res2 = await fetch(
-        `${process.env.apiBaseUrl}/posts/?classroom=${classroomId}`,
-        {
-            headers:
-            {
-                'Authorization': `Token ${authToken}`
-            }
-        }
-    )
-    const posts = await res2.json()
-
-    return { classroom, posts, profileObj }
+    return { classroomId }
 }
 export default Post

@@ -31,7 +31,7 @@ const Header = ({ profileObj }) => {
                                 <AssignmentIcon />
                             </IconButton>
                             <Typography variant="caption" color="initial" >
-                                {profileObj.name}
+                                {/* {profileObj.name} */}
                             </Typography>
                         </Grid>
                     </Grid>

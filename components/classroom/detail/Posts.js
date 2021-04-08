@@ -50,6 +50,7 @@ const Posts = (props) => {
             })
             .catch(err => console.warn(err))
     }, [])
+    console.log(props.posts)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -120,7 +121,7 @@ const Posts = (props) => {
             <><Typography variant="body1" className={classes.title}>Recent Posts</Typography>
 
                 { posts.map((post, index) => (
-                    <Link href={`/classroom/${classroom.id}/${post.id}`} key={index}>
+                    <Link href={`/classroom/${props.classroomId}/${post.id}`} key={index}>
                         <Grid container spacing={1} className={classes.div} component={Button} aria-label="post list">
                             <Grid container spacing={1}
                                 alignContent="center"
